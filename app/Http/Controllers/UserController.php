@@ -45,4 +45,17 @@ class UserController extends Controller
 
         return response()->json([], 200);
     }
+
+    /**
+     * Delete user from db.
+     * 
+     * @param User $user
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function destroy(User $user)
+    {
+        $user->delete();
+
+        return response()->json([], 200);
+    }
 }
