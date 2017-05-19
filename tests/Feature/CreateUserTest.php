@@ -31,6 +31,21 @@ class CreateUserTest extends TestCase
         ]);
 
         $response->assertStatus(422);
+        $this->assertArrayHasKey('name', $response->json());
         $this->assertCount(0, User::all());
+    }
+
+    /** @test */
+    public function it_cannot_create_user_with_not_unique_name()
+    {
+        $john = factory(User::class)->create(['name' => 'john']);
+
+        $response = $this->json('post', "/api/users", [
+            'name' => 'john'
+        ]);
+
+        $response->assertStatus(422);
+        $this->assertArrayHasKey('name', $response->json());
+        $this->assertCount(1, User::all());
     }
 }
