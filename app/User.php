@@ -2,48 +2,28 @@
 
 namespace App;
 
-use App\Phone;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Model
+class User extends Authenticatable 
 {
+    use Notifiable;
+
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @type array
      */
-    protected $fillable = ['name'];
+    protected $fillable = [
+        'name', 'email', 'password'
+    ];
 
     /**
-     * Scope users with the name like the given one.
-     * 
-     * @param  \Illuminate\Database\Eloquent\Builder $query
-     * @param  string $name
-     * @return \Illuminate\Database\Eloquent\Builder $query
+     * The attributes that should be hidden for arrays.
+     *
+     * @type array
      */
-    public function scopeFindLikeName($query, $name)
-    {
-        return $query->where('name', 'ilike', "%$name%");
-    }
-
-    /**
-     * User has many phone numbers.
-     * 
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function phones()
-    {
-        return $this->hasMany(Phone::class);
-    }
-
-    /**
-     * @param string $phoneNumber
-     * @return Phone
-     */
-    public function addPhone($phoneNumber)
-    {
-        return $this->phones()->create([
-            'number' => $phoneNumber
-        ]);
-    }
+    protected $hidden = [
+        'password', 'remember_token', 'created_at', 'updated_at'
+    ];
 }

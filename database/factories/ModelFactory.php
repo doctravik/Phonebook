@@ -13,6 +13,17 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(App\User::class, function (Faker\Generator $faker) {
+    static $password;
+
+    return [
+        'name' => $faker->name,
+        'email' => $faker->unique()->safeEmail,
+        'password' => $password ?: $password = bcrypt('secret'),
+        'remember_token' => str_random(10)
+    ];
+});
+
+$factory->define(App\Contact::class, function (Faker\Generator $faker) {
 
     return [
         'name' => $faker->name,
@@ -23,7 +34,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 $factory->define(App\Phone::class, function (Faker\Generator $faker) {
 
     return [
-        'number' => '1111111111',
-        'user_id' => factory(App\User::class)->create()->id
+        'phone_number' => $faker->e164PhoneNumber,
+        'contact_id' => factory(App\Contact::class)->create()->id
     ];
 });

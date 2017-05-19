@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
+use App\Contact;
 use Illuminate\Http\Request;
 
 class SearchController extends Controller
 {
     /**
-     * Find users by name.
+     * Find contacts by name.
      * 
      * @param string $name
      * @return \Illuminate\Http\JsonResponse
      */
     public function index($name)
     {
-        $users = User::findLikeName($name)->get();
+        $contacts = Contact::findLikeName($name)->get();
 
-        return response()->json($users, 200);    
+        return response()->json($contacts, 200);    
     }
 }

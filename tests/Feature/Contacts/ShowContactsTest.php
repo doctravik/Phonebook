@@ -2,24 +2,24 @@
 
 namespace Tests\Feature;
 
-use App\User;
+use App\Contact;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class DeleteUserTest extends TestCase
+class ShowContactsTest extends TestCase
 {
     use DatabaseTransactions;
 
     /** @test */
-    public function it_can_delete_user()
+    public function it_can_show_all_contacts()
     {
-        $user = factory(User::class)->create();
-
-        $response = $this->json('delete', "/api/users/{$user->id}");
+        $contacts = factory(Contact::class, 2)->create();
+ 
+        $response = $this->json('get', '/api/contacts');
 
         $response->assertStatus(200);
-        $this->assertCount(0, User::all());
+        $response->assertJson($contacts->toArray());
     }
 }

@@ -1,21 +1,21 @@
 <?php
 
 /**
- * User routes
+ * Contact routes
  */
-Route::get('/api/users', 'UserController@index');
-Route::post('/api/users', 'UserController@store');
-Route::put('/api/users/{user}', 'UserController@update');
-Route::delete('/api/users/{user}', 'UserController@destroy');
+Route::get('/api/contacts', 'ContactController@index');
+Route::post('/api/contacts', 'ContactController@store');
+Route::put('/api/contacts/{contact}', 'ContactController@update');
+Route::delete('/api/contacts/{contact}', 'ContactController@destroy');
 
 /**
  * Search route
  */
-Route::get('/api/users/search/{name}', 'SearchController@index');
+Route::get('/api/contacts/search/{name}', 'SearchController@index');
 
 /**
  * Phone routes
  */
-Route::post('/api/users/{user}/phones', 'PhoneController@store');
+Route::post('/api/contacts/{contact}/phones', 'PhoneController@store');
 Route::patch('/api/phones/{phone}', 'PhoneController@update');
 Route::delete('/api/phones/{phone}', 'PhoneController@destroy');

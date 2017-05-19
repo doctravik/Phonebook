@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Phone;
 
-use App\User;
+use App\Contact;
 use App\Phone;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
@@ -14,24 +14,24 @@ class StorePhoneNumberTest extends TestCase
     use DatabaseTransactions;
 
     /** @test */
-    public function user_can_store_phone_number()
+    public function contact_can_store_phone_number()
     {
-        $john = factory(User::class)->create(['name' => 'john']);
+        $john = factory(Contact::class)->create(['name' => 'john']);
 
-        $response = $this->json('post', "/api/users/{$john->id}/phones", [
+        $response = $this->json('post', "/api/contacts/{$john->id}/phones", [
             'phone_number' => '2222222222'
         ]);
 
         $response->assertStatus(200);
-        $this->assertEquals('2222222222', $john->fresh()->phones()->first()->number);
+        $this->assertEquals('2222222222', $john->fresh()->phones()->first()->phone_number);
     }
 
     /** @test */
-    public function user_cannot_store_phone_number_with_empty_value()
+    public function contact_cannot_store_phone_number_with_empty_value()
     {
-        $john = factory(User::class)->create(['name' => 'john']);
+        $john = factory(Contact::class)->create(['name' => 'john']);
 
-        $response = $this->json('post', "/api/users/{$john->id}/phones", [
+        $response = $this->json('post', "/api/contacts/{$john->id}/phones", [
             'phone_number' => ''
         ]);
 

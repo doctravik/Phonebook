@@ -11,5 +11,5 @@ class Phone extends Model
      *
      * @var array
      */
-    protected $fillable = ['number'];
+    protected $fillable = ['phone_number'];
 }
