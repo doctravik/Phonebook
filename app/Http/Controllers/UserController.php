@@ -27,7 +27,11 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        User::create(['name' => request('name')]);
+        $user = User::create(['name' => request('name')]);
+
+        if ($user && $request->exists('phone_number')) {
+            $user->addPhone(request('phone_number'));
+        }
 
         return response()->json([], 200);
     }

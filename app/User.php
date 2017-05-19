@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Phone;
 use Illuminate\Database\Eloquent\Model;
 
 class User extends Model
@@ -23,5 +24,26 @@ class User extends Model
     public function scopeFindLikeName($query, $name)
     {
         return $query->where('name', 'ilike', "%$name%");
+    }
+
+    /**
+     * User has many phone numbers.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function phones()
+    {
+        return $this->hasMany(Phone::class);
+    }
+
+    /**
+     * @param string $phoneNumber
+     * @return Phone
+     */
+    public function addPhone($phoneNumber)
+    {
+        return $this->phones()->create([
+            'number' => $phoneNumber
+        ]);
     }
 }

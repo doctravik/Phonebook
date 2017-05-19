@@ -18,3 +18,12 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'name' => $faker->name,
     ];
 });
+
+/** @var \Illuminate\Database\Eloquent\Factory $factory */
+$factory->define(App\Phone::class, function (Faker\Generator $faker) {
+
+    return [
+        'number' => '1111111111',
+        'user_id' => factory(App\User::class)->create()->id
+    ];
+});

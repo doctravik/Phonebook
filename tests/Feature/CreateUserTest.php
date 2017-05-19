@@ -48,4 +48,17 @@ class CreateUserTest extends TestCase
         $this->assertArrayHasKey('name', $response->json());
         $this->assertCount(1, User::all());
     }
+
+    /** @test */
+    public function it_can_add_phone_number_to_the_user()
+    {
+        $response = $this->json('post', '/api/users', [
+            'name' => 'JohnDoe',
+            'phone_number' => '1111111111'
+        ]);
+
+        $response->assertStatus(200);
+        $this->assertDatabaseHas('users', ['name' => 'JohnDoe']);
+        $this->assertEquals('1111111111', User::first()->phones()->first()->number);
+    }
 }
