@@ -15,11 +15,12 @@ class ShowContactsTest extends TestCase
     /** @test */
     public function it_can_show_all_contacts()
     {
-        $contacts = factory(Contact::class, 2)->create();
+        $contact = factory(Contact::class)->create();
  
         $response = $this->json('get', '/api/contacts');
 
         $response->assertStatus(200);
-        $response->assertJson($contacts->toArray());
+
+        $response->assertJsonFragment(['id' => $contact->id]);
     }
 }

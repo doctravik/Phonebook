@@ -12,4 +12,14 @@ class Phone extends Model
      * @var array
      */
     protected $fillable = ['phone_number'];
+
+    /**
+     * Phone number belongs to Contact.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function contact()
+    {
+        return $this->belongsTo(Contact::class);
+    }
 }

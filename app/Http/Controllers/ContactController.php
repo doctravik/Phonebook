@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Contact;
 use Illuminate\Http\Request;
+use App\Transformers\ContactTransformer;
 use App\Http\Requests\StoreContactRequest;
 use App\Http\Requests\UpdateContactRequest;
 
@@ -16,7 +17,10 @@ class ContactController extends Controller
      */
     public function index()
     {
-        return Contact::all(); 
+        return fractal()
+            ->collection(Contact::all())
+            ->transformWith(new ContactTransformer)
+            ->toArray(); 
     }
 
     /**
