@@ -19,3 +19,7 @@ Route::get('/api/contacts/search/{name}', 'SearchController@index');
 Route::post('/api/contacts/{contact}/phones', 'PhoneController@store');
 Route::patch('/api/phones/{phone}', 'PhoneController@update');
 Route::delete('/api/phones/{phone}', 'PhoneController@destroy');
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
