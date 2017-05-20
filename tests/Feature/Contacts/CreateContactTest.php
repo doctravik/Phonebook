@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Phone;
 use App\Contact;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
@@ -47,6 +48,34 @@ class CreateContactTest extends TestCase
         $response->assertStatus(422);
         $this->assertArrayHasKey('name', $response->json());
         $this->assertCount(1, Contact::all());
+    }
+
+    /** @test */
+    public function it_cannot_create_contact_with_empty_phone_number()
+    {
+        $response = $this->json('post', '/api/contacts', [
+            'name' => 'JohnDoe',
+            'phone_number' => ''
+        ]);
+
+        $response->assertStatus(422);
+        $this->assertArrayHasKey('phone_number', $response->json());
+        $this->assertCount(0, Contact::all());
+    }
+
+    /** @test */
+    public function it_cannot_create_contact_with_not_unique_phone_number()
+    {
+        factory(Phone::class)->create(['phone_number' => '123456']);
+
+        $response = $this->json('post', '/api/contacts', [
+            'name' => 'JohnDoe',
+            'phone_number' => '123456'
+        ]);
+
+        $response->assertStatus(422);
+        $this->assertArrayHasKey('phone_number', $response->json());
+        $this->assertDatabaseMissing('contacts', ['name' => 'JohnDoe']);
     }
 
     /** @test */

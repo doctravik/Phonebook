@@ -33,11 +33,14 @@ class ContactController extends Controller
     {
         $contact = Contact::create(['name' => request('name')]);
 
-        if ($contact && $request->exists('phone_number')) {
+        if ($contact && $request->has('phone_number')) {
             $contact->addPhone(request('phone_number'));
         }
 
-        return response()->json([], 200);
+        return fractal()
+            ->item($contact)
+            ->transformWith(new ContactTransformer)
+            ->toArray();
     }
 
     /**

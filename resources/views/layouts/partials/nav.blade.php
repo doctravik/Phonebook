@@ -14,8 +14,6 @@
             <a class="navbar-brand" href="{{ url('/') }}">
                 {{ config('app.name', 'Laravel') }}
             </a>
-
-            <button type="button" class="btn btn-info navbar-btn">+ Add contact</button>
         </div>
 
         <div class="collapse navbar-collapse" id="app-navbar-collapse">
