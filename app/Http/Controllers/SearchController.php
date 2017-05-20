@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Contact;
 use Illuminate\Http\Request;
+use App\Transformers\ContactTransformer;
 
 class SearchController extends Controller
 {
@@ -17,6 +18,9 @@ class SearchController extends Controller
     {
         $contacts = Contact::findLikeName($name)->get();
 
-        return response()->json($contacts, 200);    
+        return fractal()
+            ->collection($contacts)
+            ->transformWith(new ContactTransformer)
+            ->toArray();    
     }
 }

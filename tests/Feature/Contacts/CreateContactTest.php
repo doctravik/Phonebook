@@ -17,7 +17,8 @@ class CreateContactTest extends TestCase
     public function it_can_create_new_contact()
     {
         $response = $this->json('post', '/api/contacts', [
-            'name' => 'JohnDoe'
+            'name' => 'JohnDoe',
+            'phone_number' => '0123456789'
         ]);
 
         $response->assertStatus(200);

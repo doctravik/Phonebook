@@ -9,6 +9,8 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+window.eventDispatcher = new Vue();
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -16,6 +18,8 @@ window.Vue = require('vue');
  */
 
 Vue.component('contacts', require('./components/Contacts.vue'));
+Vue.component('filter-button', require('./components/FilterButton.vue'));
+Vue.component('search-contact', require('./components/SearchContact.vue'));
 
 const app = new Vue({
     el: '#app'

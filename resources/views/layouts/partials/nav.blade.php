@@ -21,6 +21,8 @@
             <ul class="nav navbar-nav">
                 &nbsp;
             </ul>
+            
+            <search-contact></search-contact>
 
             <!-- Right Side Of Navbar -->
             <ul class="nav navbar-nav navbar-right">

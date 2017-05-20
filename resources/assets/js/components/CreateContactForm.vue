@@ -71,8 +71,7 @@
                 this.errors.clear();
                 this.form.name = null;
                 this.form.phone_number = null;
-            }
-
+            },
         },
     }
 </script>

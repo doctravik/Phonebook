@@ -20,8 +20,11 @@
             </div>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-4" v-if="showCreateForm">
             <create-contact-form @add-contact="addContact"></create-contact-form>
+        </div>
+        <div v-else>
+            <filter-button></filter-button>
         </div>
     </div>
 </template>
@@ -47,11 +50,13 @@
          */
         created() {
             this.selectContactsFromDb();
+            this.listenEvents()
         },
 
         data() {
             return {
-                contacts: null
+                contacts: null,
+                showCreateForm: true
             }
         },
 
@@ -88,6 +93,21 @@
              */
             removeContact(contactId) {
                 this.contacts = this.contacts.filter(contact => contact.id != contactId);
+            },
+
+            /**
+             * @return void
+             */
+            listenEvents() {
+                eventDispatcher.$on('search-mode-on', contacts => {
+                    this.contacts = contacts;
+                    this.showCreateForm = false;
+                });
+
+                eventDispatcher.$on('search-mode-off', () => {
+                    this.selectContactsFromDb();
+                    this.showCreateForm = true;
+                });
             }
         },
 
