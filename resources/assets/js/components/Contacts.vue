@@ -7,18 +7,11 @@
                 </div>
 
                <ul class="media-list" v-if="hasContacts">
-                    <li class="media" v-for="contact in contacts">
-                        <div class="media__left">
-                            <img class="media__image" src="http://placehold.it/64x64">
-                        </div>
-                        <div class="media__body">
-                            <a href="#"><strong>{{ contact.name }}</strong></a>
-                        </div>
-                        <div class="media__right">
-                            <span class="btn btn-success" @click="updateContact(contact)">Edit</span>
-                            <span class="btn btn-default" @click="deleteContact(contact)">Delete</span>
-                        </div>
-                    </li>
+                    <contact v-for="contact in contacts" 
+                        :key="contact.id" 
+                        :contact="contact" 
+                        @remove-contact="removeContact">
+                    </contact>
                 </ul>
 
                 <ul class="media-list" v-else>
@@ -34,6 +27,7 @@
 </template>
 
 <script>
+    import Contact from './Contact.vue';
     import CreateContactForm from './CreateContactForm.vue';
 
     export default {
@@ -86,63 +80,17 @@
                 this.contacts.push(contact);
             },
 
-            updateContact() {
-
-            },
-
-            /**
-             * Remove contact on server side.
-             * 
-             * @param  object contact
-             * @return void
-             */
-            deleteContact(contact) {
-                axios.delete('/api/contacts/' + contact.id)
-                    .then(response => {
-                        this.removeContact(contact);
-                    })
-                    .catch(error => {
-                        //
-                    })
-            },
-
             /**
              * Remove contact on client side.
              * 
-             * @param  object contact
+             * @param  int contactId
              * @return void
              */
-            removeContact(contact) {
-                this.contacts = this.contacts.filter(user => user.id != contact.id);
+            removeContact(contactId) {
+                this.contacts = this.contacts.filter(contact => contact.id != contactId);
             }
         },
 
-        components: { CreateContactForm }
+        components: { CreateContactForm, Contact }
     }
 </script>
-
-<style scoped>
-    .media-list {
-        margin: 0;
-        padding: 0;
-    }
-
-    .media {
-        display: flex;
-        align-items: center;
-        padding: 1em;
-        margin: 0;
-    }
-
-    .media + .media {
-        border-top: 1px solid #CCC;
-    }
-
-    .media__body {
-        margin: 0 1em 0 1em;
-    }
-
-    .media__right {
-        margin-left: auto;
-    }
-</style>

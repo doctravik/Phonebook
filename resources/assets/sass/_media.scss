@@ -1,0 +1,23 @@
+.media-list {
+    margin: 0;
+    padding: 0;
+}
+
+.media {
+    display: flex;
+    align-items: center;
+    padding: 1em;
+    margin: 0;
+}
+
+.media + .media {
+    border-top: 1px solid #CCC;
+}
+
+.media__body {
+    margin: 0 1em 0 1em;
+}
+
+.media__right {
+    margin-left: auto;
+}
