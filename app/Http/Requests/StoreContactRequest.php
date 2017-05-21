@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreContactRequest extends FormRequest
@@ -24,8 +25,24 @@ class StoreContactRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|min:3|max:30|unique:contacts',
-            'phone_number' => 'required|string|max:20|unique:phones'
+            'name' => [
+                'required',
+                'string',
+                'min:3',
+                'max:30',
+                Rule::unique('contacts')->where(function ($query) {
+                    $query->where('user_id', auth()->id());
+                }),
+            ],
+
+            'phone_number' => [
+                'required',
+                'string',
+                'max:20',
+                Rule::unique('phones')->where(function ($query) {
+                    $query->where('user_id', auth()->id());
+                }),
+            ]
         ];
     }
 }

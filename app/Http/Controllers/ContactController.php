@@ -11,14 +11,24 @@ use App\Http\Requests\UpdateContactRequest;
 class ContactController extends Controller
 {
     /**
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');        
+    }
+
+    /**
      * Get all contacts from db.
      * 
      * @return json
      */
     public function index()
     {
+        $contacts = auth()->user()->contacts()->with('phones')->get();
+
         return fractal()
-            ->collection(Contact::with('phones')->get())
+            ->collection($contacts)
             ->transformWith(new ContactTransformer)
             ->includePhones()
             ->toArray(); 
@@ -32,8 +42,12 @@ class ContactController extends Controller
      */
     public function store(StoreContactRequest $request)
     {
-        $contact = Contact::create(['name' => request('name')]);
-        $contact->addPhone(request('phone_number'));
+        $contact = auth()->user()->addContact(['name' => request('name')]);
+        
+        $contact->addPhone([
+            'user_id' => auth()->id(),
+            'phone_number' => request('phone_number')
+        ]);
 
         return fractal()
             ->item($contact->load('phones'))
@@ -51,6 +65,8 @@ class ContactController extends Controller
      */
     public function update(UpdateContactRequest $request, Contact $contact)
     {
+        $this->authorize('update', $contact);
+
         $contact->update(['name' => request('name')]);
 
         return response()->json([], 200);
@@ -64,6 +80,8 @@ class ContactController extends Controller
      */
     public function destroy(Contact $contact)
     {
+        $this->authorize('delete', $contact);
+
         $contact->delete();
 
         return response()->json([], 200);

@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateContactRequest extends FormRequest
+class UpdatePhoneRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,13 +25,11 @@ class UpdateContactRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => [
+            'phone_number' => [
                 'required',
-                'string',
-                'min:3',
-                'max:30',
-                Rule::unique('contacts')->ignore($this->contact->id)->where(function($query) {
-                    $query->where('user_id', $this->contact->user_id);
+                'max:20',
+                Rule::unique('phones')->where(function($query) {
+                    $query->where('user_id', $this->phone->user_id);
                 })
             ]
         ];

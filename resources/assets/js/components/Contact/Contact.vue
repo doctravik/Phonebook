@@ -5,7 +5,8 @@
         </div>
         <div class="media__body">
             <div v-if="editing" class="form-group is-marginless" :class="{'has-error': errors.has('name')}">
-                <input type="text" name="name" class="form-control" v-model="name">
+                <input type="text" name="name" class="form-control" 
+                    v-model="name" @keyup.enter="updateContact" required>
                 <span class="help-block is-marginless" v-if="errors.has('name')">
                     <strong v-text="errors.get('name')"></strong>
                 </span>

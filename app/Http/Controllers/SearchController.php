@@ -9,6 +9,14 @@ use App\Transformers\ContactTransformer;
 class SearchController extends Controller
 {
     /**
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');        
+    }
+
+    /**
      * Find contacts by name.
      * 
      * @param string $name
@@ -16,7 +24,7 @@ class SearchController extends Controller
      */
     public function index($name)
     {
-        $contacts = Contact::findLikeName($name)->get();
+        $contacts = auth()->user()->contacts()->findLikeName($name)->get();
 
         return fractal()
             ->collection($contacts)

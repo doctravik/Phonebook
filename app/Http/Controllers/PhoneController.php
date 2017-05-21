@@ -5,21 +5,35 @@ namespace App\Http\Controllers;
 use App\Phone;
 use App\Contact;
 use Illuminate\Http\Request;
-use App\Http\Requests\PhoneRequest;
 use App\Transformers\PhoneTransformer;
+use App\Http\Requests\StorePhoneRequest;
+use App\Http\Requests\UpdatePhoneRequest;
 
 class PhoneController extends Controller
 {
     /**
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');        
+    }
+
+    /**
      * Store $phone in db.
      *
-     * @param PhoneRequest $request
+     * @param StorePhoneRequest $request
      * @param  Contact $contact
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(PhoneRequest $request, Contact $contact)
+    public function store(StorePhoneRequest $request, Contact $contact)
     {
-        $phone = $contact->addPhone(request('phone_number'));
+        $this->authorize('update', $contact);
+
+        $phone = $contact->addPhone([
+            'phone_number' => request('phone_number'),
+            'user_id' => auth()->id()
+        ]);
 
         return fractal()
             ->item($phone)
@@ -30,15 +44,15 @@ class PhoneController extends Controller
     /**
      * Update $phone in db.
      *
-     * @param PhoneRequest $request
+     * @param UpdatePhoneRequest $request
      * @param  Phone  $phone
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(PhoneRequest $request, Phone $phone)
+    public function update(UpdatePhoneRequest $request, Phone $phone)
     {
-        if (request()->exists('phone_number')) {
-            $phone->update(['phone_number' => request('phone_number')]);
-        }
+        $this->authorize('update', $phone);
+
+        $phone->update(['phone_number' => request('phone_number')]);
 
         return response()->json([], 200);
     }
@@ -51,6 +65,8 @@ class PhoneController extends Controller
      */
     public function destroy(Phone $phone)
     {
+        $this->authorize('delete', $phone);
+
         $phone->delete();
 
         return response()->json([], 200);

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Phone extends Model
@@ -11,7 +12,7 @@ class Phone extends Model
      *
      * @var array
      */
-    protected $fillable = ['phone_number'];
+    protected $fillable = ['phone_number', 'user_id'];
 
     /**
      * Phone number belongs to Contact.
@@ -21,5 +22,15 @@ class Phone extends Model
     public function contact()
     {
         return $this->belongsTo(Contact::class);
+    }
+
+    /**
+     * Phone number belongs to User.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

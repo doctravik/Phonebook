@@ -22,7 +22,9 @@
                 &nbsp;
             </ul>
             
-            <search-contact></search-contact>
+            @if(Auth::check())
+                <search-contact></search-contact>
+            @endif
 
             <!-- Right Side Of Navbar -->
             <ul class="nav navbar-nav navbar-right">

@@ -1,12 +1,12 @@
 <template>
-    <form class="phone">
+    <form class="phone" @submit.prevent="createPhone">
         <div class="phone__label">
             <span class="glyphicon glyphicon-phone-alt" aria-hidden="true"></span>            
         </div>
         <div class="phone__content" :class="{'has-error': errors.has('phone_number')}">
             <div class="phone__number" :class="{'has-error': errors.has('phone_number')}">
                 <masked-input class="form-control" v-model="phoneNumber" 
-                    mask="\+1 (111) 111-11-11" placeholder="Phone"/>
+                    mask="\+1 (111) 111-11-11" placeholder="Phone" required/>
             </div>
             <div class="phone__buttons">
                 <div class="btn-toolbar" role="toolbar"> 

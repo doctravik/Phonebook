@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\User;
 use App\Phone;
 use Illuminate\Database\Eloquent\Model;
 
@@ -37,13 +38,21 @@ class Contact extends Model
     }
 
     /**
-     * @param string $phoneNumber
+     * Contact belongs to User.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+       return $this->belongsTo(User::class); 
+    }
+
+    /**
+     * @param array $attributes
      * @return Phone
      */
-    public function addPhone($phoneNumber)
+    public function addPhone($attributes)
     {
-        return $this->phones()->create([
-            'phone_number' => $phoneNumber
-        ]);
+        return $this->phones()->create($attributes);
     }
 }

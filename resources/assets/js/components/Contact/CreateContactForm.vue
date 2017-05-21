@@ -9,7 +9,7 @@
                 <div class="form-group" :class="{'has-error': errors.has('name')}">
                     <label for="name" class="control-label">Name</label>
 
-                    <input type="text" class="form-control" v-model="form.name" required autofocus>
+                    <input type="text" class="form-control" v-model="form.name" placeholder="name" required autofocus>
                     <span class="help-block" v-if="errors.has('name')">
                         <strong v-text="errors.get('name')"></strong>
                     </span>
@@ -19,7 +19,7 @@
                     <label for="name" class="control-label">Phone</label>
 
                     <masked-input class="form-control" v-model="form.phone_number" 
-                        mask="\+1 (111) 111-11-11" placeholder="Phone"/>
+                        mask="\+1 (111) 111-11-11" placeholder="Phone" required/>
                     <span class="help-block" v-if="errors.has('phone_number')">
                         <strong v-text="errors.get('phone_number')"></strong>
                     </span>

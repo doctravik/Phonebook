@@ -27,14 +27,17 @@ $factory->define(App\Contact::class, function (Faker\Generator $faker) {
 
     return [
         'name' => $faker->name,
+        'user_id' => factory(App\User::class)->create()->id
     ];
 });
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(App\Phone::class, function (Faker\Generator $faker) {
+    $contact = factory(App\Contact::class)->create();
 
     return [
         'phone_number' => $faker->e164PhoneNumber,
-        'contact_id' => factory(App\Contact::class)->create()->id
+        'contact_id' => $contact->id,
+        'user_id' =>  $contact->user->id
     ];
 });
