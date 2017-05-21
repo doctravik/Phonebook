@@ -14,10 +14,14 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-    <div id="app">
+    <div id="app" class="site">
         @include('layouts.partials.nav')
 
-        @yield('content')
+        <section class="flex-1">
+            @yield('content')
+        </section>
+
+        @include('layouts.partials.footer')        
     </div>
 
     <!-- Scripts -->
