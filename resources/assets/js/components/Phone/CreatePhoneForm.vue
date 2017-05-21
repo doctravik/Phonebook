@@ -5,7 +5,8 @@
         </div>
         <div class="phone__content" :class="{'has-error': errors.has('phone_number')}">
             <div class="phone__number" :class="{'has-error': errors.has('phone_number')}">
-                <input type="text" class="form-control" v-model="phoneNumber">
+                <masked-input class="form-control" v-model="phoneNumber" 
+                    mask="\+1 (111) 111-11-11" placeholder="Phone"/>
             </div>
             <div class="phone__buttons">
                 <div class="btn-toolbar" role="toolbar"> 
@@ -26,7 +27,8 @@
 
 <script>
     import Form from './Form.js';
-
+    import MaskedInput from 'vue-masked-input';
+    
     export default {
         props: ['contact'],
 
@@ -71,6 +73,8 @@
             },
         },
 
-        mixins: [ Form ]
+        mixins: [ Form ],
+
+        components: { MaskedInput }
     }
 </script>

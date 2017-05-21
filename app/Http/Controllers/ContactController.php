@@ -39,8 +39,9 @@ class ContactController extends Controller
         }
 
         return fractal()
-            ->item($contact)
+            ->item($contact->load('phones'))
             ->transformWith(new ContactTransformer)
+            ->includePhones()
             ->toArray();
     }
 

@@ -18,7 +18,8 @@
                 <div class="form-group" :class="{'has-error': errors.has('phone_number')}">
                     <label for="name" class="control-label">Phone</label>
 
-                    <input type="text" class="form-control" v-model="form.phone_number" required>
+                    <masked-input class="form-control" v-model="form.phone_number" 
+                        mask="\+1 (111) 111-11-11" placeholder="Phone"/>
                     <span class="help-block" v-if="errors.has('phone_number')">
                         <strong v-text="errors.get('phone_number')"></strong>
                     </span>
@@ -32,8 +33,9 @@
 </template>
 
 <script>
+    import MaskedInput from 'vue-masked-input';
     import Errors from './../../helpers/Errors.js';
-
+    
     export default {
         data() {
             return {
@@ -73,5 +75,7 @@
                 this.form.phone_number = null;
             },
         },
+
+        components: {MaskedInput}
     }
 </script>
