@@ -1,7 +1,7 @@
 <template>
     <div class="filter-button">
         <button type="button" class="btn btn-default btn-lg" aria-label="Left Align" @click="cancelFiltering">
-            <span class="glyphicon glyphicon-filter" aria-hidden="true"></span> Clear filtering
+            <span class="glyphicon glyphicon-erase" aria-hidden="true"></span> Clear filtering
         </button>
     </div>
 </template>
@@ -9,6 +9,9 @@
 <script>
     export default {
         methods: {
+            /**
+             * @return void
+             */
             cancelFiltering() {
                 eventDispatcher.$emit('search-mode-off');
             }

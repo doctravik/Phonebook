@@ -11,7 +11,7 @@
                 </span>
             </div>
             <div v-else>
-                <a href="#"><strong v-text="name"></strong></a>
+                <a href="#" @click.prevent="togglePhonesMenu"><strong v-text="name"></strong></a>
             </div>
         </div>
         <div class="media__right">
@@ -24,20 +24,31 @@
                 <span class="btn btn-danger" @click="deleteContact">Delete</span>
             </div>
         </div>
+        <phones :contact="contact" v-show="showPhonesMenu"></phones>
     </li>
 </template>
 
 <script>
-    import Errors from './../helpers/Errors.js';
+    import Errors from './../../helpers/Errors.js';
 
     export default {
         props: ['contact'],
+
+        /**
+         * Mounted event of component.
+         * 
+         * @return void
+         */
+        mounted() {
+            this.listenEvents();
+        },
 
         data() {
             return {
                 name: this.contact.name,
                 editing: false,
-                errors: new Errors()
+                errors: new Errors(),
+                showPhonesMenu: false
             }
         },
 
@@ -96,6 +107,25 @@
             resetForm() {
                 this.errors.clear();
                 this.name = this.contact.name;
+            },
+
+            /**
+             * @return void
+             */
+            togglePhonesMenu() {
+                this.showPhonesMenu = !this.showPhonesMenu;
+                eventDispatcher.$emit('hide-phones', this.contact.id);
+            },
+
+            /**
+             * @return void
+             */
+            listenEvents() {
+                eventDispatcher.$on('hide-phones', contactId => {
+                    if (this.contact.id != contactId) {
+                        this.showPhonesMenu = false;
+                    }
+                });
             }
         }
     }

@@ -17,9 +17,10 @@ window.eventDispatcher = new Vue();
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('contacts', require('./components/Contacts.vue'));
-Vue.component('filter-button', require('./components/FilterButton.vue'));
-Vue.component('search-contact', require('./components/SearchContact.vue'));
+Vue.component('phones', require('./components/Phone/Phones.vue'));
+Vue.component('contacts', require('./components/Contact/Contacts.vue'));
+Vue.component('filter-button', require('./components/Contact/FilterButton.vue'));
+Vue.component('search-contact', require('./components/Contact/SearchContact.vue'));
 
 const app = new Vue({
     el: '#app'

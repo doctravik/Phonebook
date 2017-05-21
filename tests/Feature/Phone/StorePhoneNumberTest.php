@@ -16,26 +16,41 @@ class StorePhoneNumberTest extends TestCase
     /** @test */
     public function contact_can_store_phone_number()
     {
-        $john = factory(Contact::class)->create(['name' => 'john']);
+        $user = factory(Contact::class)->create();
 
-        $response = $this->json('post', "/api/contacts/{$john->id}/phones", [
-            'phone_number' => '2222222222'
+        $response = $this->json('post', "/api/contacts/{$user->id}/phones", [
+            'phone_number' => '0123456789'
         ]);
 
         $response->assertStatus(200);
-        $this->assertEquals('2222222222', $john->fresh()->phones()->first()->phone_number);
+        $this->assertEquals('0123456789', $user->fresh()->phones()->first()->phone_number);
     }
 
     /** @test */
     public function contact_cannot_store_phone_number_with_empty_value()
     {
-        $john = factory(Contact::class)->create(['name' => 'john']);
+        $user = factory(Contact::class)->create();
 
-        $response = $this->json('post', "/api/contacts/{$john->id}/phones", [
+        $response = $this->json('post', "/api/contacts/{$user->id}/phones", [
             'phone_number' => ''
         ]);
 
         $response->assertStatus(422);
+        $this->assertArrayHasKey('phone_number', $response->json());
         $this->assertCount(0, Phone::all());
+    }
+
+    /** @test */
+    public function contact_cannot_store_phone_number_with_not_unique_value()
+    {
+        $user = factory(Contact::class)->create(['name' => 'john']);
+        $user->addPhone('0123456789');
+
+        $response = $this->json('post', "/api/contacts/{$user->id}/phones", [
+            'phone_number' => '0123456789'
+        ]);
+
+        $response->assertStatus(422);
+        $this->assertArrayHasKey('phone_number', $response->json());
     }
 }

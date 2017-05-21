@@ -18,8 +18,9 @@ class ContactController extends Controller
     public function index()
     {
         return fractal()
-            ->collection(Contact::all())
+            ->collection(Contact::with('phones')->get())
             ->transformWith(new ContactTransformer)
+            ->includePhones()
             ->toArray(); 
     }
 

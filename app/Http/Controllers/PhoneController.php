@@ -6,6 +6,7 @@ use App\Phone;
 use App\Contact;
 use Illuminate\Http\Request;
 use App\Http\Requests\PhoneRequest;
+use App\Transformers\PhoneTransformer;
 
 class PhoneController extends Controller
 {
@@ -18,9 +19,12 @@ class PhoneController extends Controller
      */
     public function store(PhoneRequest $request, Contact $contact)
     {
-        $contact->addPhone(request('phone_number'));
+        $phone = $contact->addPhone(request('phone_number'));
 
-        return response()->json([], 200);
+        return fractal()
+            ->item($phone)
+            ->transformWith(new PhoneTransformer)
+            ->toArray();
     }
 
     /**

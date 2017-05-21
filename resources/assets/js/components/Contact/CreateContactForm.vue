@@ -9,7 +9,7 @@
                 <div class="form-group" :class="{'has-error': errors.has('name')}">
                     <label for="name" class="control-label">Name</label>
 
-                    <input type="name" class="form-control" name="name" v-model="form.name" required autofocus>
+                    <input type="text" class="form-control" v-model="form.name" required autofocus>
                     <span class="help-block" v-if="errors.has('name')">
                         <strong v-text="errors.get('name')"></strong>
                     </span>
@@ -18,7 +18,7 @@
                 <div class="form-group" :class="{'has-error': errors.has('phone_number')}">
                     <label for="name" class="control-label">Phone</label>
 
-                    <input type="name" class="form-control" name="name" v-model="form.phone_number" required>
+                    <input type="text" class="form-control" v-model="form.phone_number" required>
                     <span class="help-block" v-if="errors.has('phone_number')">
                         <strong v-text="errors.get('phone_number')"></strong>
                     </span>
@@ -32,7 +32,7 @@
 </template>
 
 <script>
-    import Errors from './../helpers/Errors.js';
+    import Errors from './../../helpers/Errors.js';
 
     export default {
         data() {

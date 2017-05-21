@@ -19,7 +19,7 @@ class PhoneTransformer extends TransformerAbstract
     public function transform(Phone $phone) {
         return [
             'id' => (int) $phone->id,
-            'phone_number' => $phone->phone_name
+            'phone_number' => $phone->phone_number
         ];
     }
 

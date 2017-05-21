@@ -1,0 +1,59 @@
+.phones {
+    background-color: whitesmoke;
+    padding: 2em;
+    margin-top: 2em;
+    width: 100%;
+    position: relative;
+}
+
+.phone {
+    display: flex;
+
+    & + & {
+        margin-top: 1em;
+    }
+}
+
+.phone__label {
+    display: inline-block;
+    margin-right: 1em;
+    padding-top: 7px;
+}
+
+.phone__new-button {
+    margin-top: 1em;
+}
+
+.phone__content {
+    display: inline-block;
+}
+
+.phone__number {
+    display: inline-block;
+    margin-right: 1em;
+}
+
+.phone__buttons {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.phones__new-button {
+    position: absolute;
+    right: 20px;
+    top: 26px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 100%;
+    cursor: pointer;
+    padding: 8px 11px;
+
+    &:hover {
+        background-color: #ddd;
+    }
+}
+
+.phone__error {
+    font-size: 0.85em;
+    margin-bottom: 0;
+}

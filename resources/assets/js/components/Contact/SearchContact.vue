@@ -28,6 +28,8 @@
 
         methods: {
             /**
+             * Search contacts by name.
+             * 
              * @return void
              */
             search() {
