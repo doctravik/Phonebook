@@ -33,10 +33,7 @@ class ContactController extends Controller
     public function store(StoreContactRequest $request)
     {
         $contact = Contact::create(['name' => request('name')]);
-
-        if ($contact && $request->has('phone_number')) {
-            $contact->addPhone(request('phone_number'));
-        }
+        $contact->addPhone(request('phone_number'));
 
         return fractal()
             ->item($contact->load('phones'))

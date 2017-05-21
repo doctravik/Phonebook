@@ -38,6 +38,18 @@ class CreateContactTest extends TestCase
     }
 
     /** @test */
+    public function it_cannot_create_contact_without_name_size_less_than_3()
+    {
+        $response = $this->json('post', '/api/contacts', [
+            'name' => '12'
+        ]);
+
+        $response->assertStatus(422);
+        $this->assertArrayHasKey('name', $response->json());
+        $this->assertCount(0, Contact::all());
+    }
+
+    /** @test */
     public function it_cannot_create_contact_with_not_unique_name()
     {
         $john = factory(Contact::class)->create(['name' => 'john']);
@@ -49,6 +61,18 @@ class CreateContactTest extends TestCase
         $response->assertStatus(422);
         $this->assertArrayHasKey('name', $response->json());
         $this->assertCount(1, Contact::all());
+    }
+
+    /** @test */
+    public function it_cannot_create_contact_without_phone_number()
+    {
+        $response = $this->json('post', '/api/contacts', [
+            'name' => 'JohnDoe'
+        ]);
+
+        $response->assertStatus(422);
+        $this->assertArrayHasKey('phone_number', $response->json());
+        $this->assertCount(0, Contact::all());
     }
 
     /** @test */

@@ -24,8 +24,8 @@ class StoreContactRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:contacts',
-            'phone_number' => 'required|unique:phones'
+            'name' => 'required|string|min:3|max:30|unique:contacts',
+            'phone_number' => 'required|string|max:20|unique:phones'
         ];
     }
 }

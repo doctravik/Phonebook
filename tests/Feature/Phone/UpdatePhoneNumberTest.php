@@ -39,4 +39,19 @@ class UpdatePhoneNumberTest extends TestCase
         $response->assertStatus(422);
         $this->assertEquals('1111111111', $john->fresh()->phones()->first()->phone_number);
     }
+
+    /** @test */
+    public function it_cannot_update_phone_number_if_number_has_length_more_than_20()
+    {
+        $john = factory(Contact::class)->create(['name' => 'john']);
+        $phone = $john->addPhone('0123456789');
+
+        $response = $this->json('patch', "/api/phones/{$phone->id}", [
+            'phone_number' => '0123456789012345678901'
+        ]);
+
+        $response->assertStatus(422);
+        $this->assertArrayHasKey('phone_number', $response->json());
+        $this->assertEquals('0123456789', $john->fresh()->phones()->first()->phone_number);
+    }
 }

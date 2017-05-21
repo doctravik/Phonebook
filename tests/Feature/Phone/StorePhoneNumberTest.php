@@ -53,4 +53,18 @@ class StorePhoneNumberTest extends TestCase
         $response->assertStatus(422);
         $this->assertArrayHasKey('phone_number', $response->json());
     }
+
+    /** @test */
+    public function it_cannot_store_phone_number_if_number_has_length_more_than_20()
+    {
+        $user = factory(Contact::class)->create();
+
+        $response = $this->json('post', "/api/contacts/{$user->id}/phones", [
+            'phone_number' => '0123456789012345678901'
+        ]);
+
+        $response->assertStatus(422);
+        $this->assertArrayHasKey('phone_number', $response->json());
+    }
+
 }

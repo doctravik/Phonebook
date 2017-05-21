@@ -27,6 +27,9 @@ class UpdateContactRequest extends FormRequest
         return [
             'name' => [
                 'required',
+                'string',
+                'min:3',
+                'max:30',
                 Rule::unique('contacts')->ignore($this->contact->id)
             ]
         ];
